@@ -142,8 +142,8 @@ class Octave < Formula
     system bin/"octave", "--eval", "single ([1+i 2+i 3+i]) * single ([ 4+i ; 5+i ; 6+i])"
     # Test basic compilation
     (testpath/"oct_demo.cc").write("#include <octave/oct.h>\n"\
-    "DEFUN_DLD (oct_demo, args, /*nargout*/, \"doc str\")"\
-    "{ return ovl (42); }\n")
+                                   "DEFUN_DLD (oct_demo, args, /*nargout*/, \"doc str\")"\
+                                   "{ return ovl (42); }\n")
     system bin/"octave", "--eval", "mkoctfile('oct_demo.cc'); assert(oct_demo, 42)"
     # Test FLIBS environment variable
     system bin/"octave", "--eval", "args = strsplit (mkoctfile ('-p', 'FLIBS')); "\
