@@ -150,8 +150,8 @@ class Octave < Formula
     # Test FLIBS environment variable
     system bin/"octave", "--eval", <<~EOS
       args = strsplit (mkoctfile ('-p', 'FLIBS'));
-      args = args(~cellfun('isempty', args));"
-      mkoctfile (args{:}, 'oct_demo.cc'); "
+      args = args(~cellfun('isempty', args));
+      mkoctfile (args{:}, 'oct_demo.cc');
       assert(oct_demo, 42)
     EOS
   end
