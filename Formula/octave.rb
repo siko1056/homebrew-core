@@ -140,5 +140,16 @@ class Octave < Formula
     system bin/"octave", "--eval", "(22/7 - pi)/pi"
     # This is supposed to crash octave if there is a problem with BLAS
     system bin/"octave", "--eval", "single ([1+i 2+i 3+i]) * single ([ 4+i ; 5+i ; 6+i])"
+    # Test basic compilation
+    system cat<<EOT >> oct_demo.cc
+    #include <octave/oct.h>
+    DEFUN_DLD (oct_demo, args, /*nargout*/, "doc str")
+    { return ovl (42); }
+    EOT
+    system bin/"octave", "--eval", "mkoctfile('oct_demo.cc'); assert(oct_demo, 42)"
+    # Test FLIBS environment variable
+    system bin/"octave", "--eval", "args = strsplit (mkoctfile ('-p', 'FLIBS')); "\
+      "args = args(~cellfun('isempty', args)); mkoctfile (args{:}, 'oct_demo.cc'); "\
+      "assert(oct_demo, 42)"
   end
 end
